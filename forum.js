@@ -10,25 +10,40 @@ app.set('view engine', 'html');
 app.set('views', __dirname);
 
 // database:
-var post_message;
-var post_message_2;
+var post_message = [];
 var info;
-// const { Client } = require('pg');
-// const client = new Client({database: 'my-first-database'});
-//
-// client.connect();
-// client.query('SELECT message FROM posts;', (err, res) => {
-//   if (err) throw err;
-//   for (let row of res.rows) {
-//     // store the data in a global variable post_message
-//     console.log(res.rows);
-//     post_message = JSON.stringify(row);
-//   }
-//   client.end();
-// });
+
+const text1 = 'INSERT INTO forum(message) VALUES($1) RETURNING *';
+const text2 = 'SELECT message FROM forum';
+
+const { Client } = require('pg');
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true,
+});
+client.connect();
 
 
+app.get('/post', function(req, res) {
+  info = [req.query.forum_message];
+  console.log(info);
+
+  client.query(text1, info, (err, res) => {
+       if (err) throw err;
+   });
+   res.redirect('/');
+});
+
+
+// render the index page
 app.get('/', function(req, res) {
+
+  client.query(text2, (err, res) => {
+    if (err) throw err;
+    for(var i = 1 ; i < res.rows.length; i++){
+      console.log(res.rows[i].message);
+      post_message[i] = res.rows[i].message + '\r\n';}
+  });
 
     res.render('index', {
       message: req.query.forum_message,
@@ -38,36 +53,7 @@ app.get('/', function(req, res) {
 )
 
 //redirect to the index page
-app.get('/post', function(req, res) {
-  info = req.query.forum_message;
-  console.log(info);
 
-  //info = req.query.forum_message;
-  const text1 = 'INSERT INTO posts(message) VALUES(info)';
-  const text2 = 'SELECT message FROM posts';
-  const { Client } = require('pg');
-  const client = new Client({database: 'my-first-database'});
-  client.connect();
-
-  //client.connect();
-  client.query(text2, (err, res) => {
-       if (err) throw err;
-       else {
-            // store the data in a global variable post_message
-            console.log(JSON.stringify(res.rows));
-            post_message = JSON.stringify(res.rows);
-          }
-  //client.end();
-   });
-
-  client.query(text1, (err, res) => {
-       if (err) throw err;
-  client.end();
-   });
-
-
-  res.redirect('/');
-});
 
 app.listen(port, function () {
   console.log('Listen to port 8000')
