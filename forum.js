@@ -31,7 +31,7 @@ app.get('/post', function(req, res) {
   client.query(text1, info, (err, res) => {
        if (err) throw err;
    });
-   res.redirect('/');
+   res.redirect('https://polar-refuge-57799.herokuapp.com/');
 });
 
 
@@ -40,7 +40,7 @@ app.get('/', function(req, res) {
 
   client.query(text2, (err, res) => {
     if (err) throw err;
-    for(var i = 1 ; i < res.rows.length; i++){
+    for(var i = 0 ; i < res.rows.length; i++){
       console.log(res.rows[i].message);
       post_message[i] = res.rows[i].message + '\r\n';}
   });
@@ -52,9 +52,7 @@ app.get('/', function(req, res) {
   }
 )
 
-//redirect to the index page
-
 
 app.listen(port, function () {
-  console.log('Listen to port 8000')
+  console.log('Listen to port: ' + port)
 })
