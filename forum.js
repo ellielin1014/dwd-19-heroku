@@ -46,7 +46,7 @@ app.get('/', function(req, res) {
   });
 
     res.render('index', {
-      message: req.query.forum_message,
+      // message: req.query.forum_message,
       p_message: post_message
     });
   }
