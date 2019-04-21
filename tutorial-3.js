@@ -28,3 +28,6 @@ http.createServer(function (req, res) {
   res.writeHead(200);
   res.end(info, req);
 }).listen(port);
+
+
+console.log('Server listening on port: ', port);

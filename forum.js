@@ -13,14 +13,11 @@ app.set('views', __dirname);
 var post_message = [];
 var info;
 
-const text1 = 'INSERT INTO forum(message) VALUES($1) RETURNING *';
-const text2 = 'SELECT message FROM forum';
+const text1 = 'INSERT INTO posts(message) VALUES($1) RETURNING *';
+const text2 = 'SELECT message FROM posts';
 
 const { Client } = require('pg');
-const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true,
-});
+const client = new Client({database: 'my-first-database'});
 client.connect();
 
 
@@ -31,7 +28,7 @@ app.get('/post', function(req, res) {
   client.query(text1, info, (err, res) => {
        if (err) throw err;
    });
-   res.redirect('https://polar-refuge-57799.herokuapp.com/');
+   res.redirect('/');
 });
 
 

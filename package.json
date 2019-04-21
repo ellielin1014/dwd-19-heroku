@@ -1,7 +1,6 @@
 {
   "name": "week-3",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node forum.js",
@@ -12,5 +11,15 @@
   "dependencies": {
     "express": "^4.16.4",
     "pg": "^7.10.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ellielin1014/dwd-19-heroku.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ellielin1014/dwd-19-heroku/issues"
+  },
+  "homepage": "https://github.com/ellielin1014/dwd-19-heroku#readme",
+  "description": ""
 }
