@@ -13,11 +13,14 @@ app.set('views', __dirname);
 var post_message = [];
 var info;
 
-const text1 = 'INSERT INTO posts(message) VALUES($1) RETURNING *';
-const text2 = 'SELECT message FROM posts';
+const text1 = 'INSERT INTO forum(message) VALUES($1) RETURNING *';
+const text2 = 'SELECT message FROM forum';
 
 const { Client } = require('pg');
-const client = new Client({database: 'my-first-database'});
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true,
+});
 client.connect();
 
 
